@@ -15,11 +15,11 @@ services:
             - ./:/var/www
         depends_on:
             - redis_micro_01
-            - queue
+            - queue_micro_01
         networks:
             - microservices
         links:
-            - db_micro_01
+            - db_micro_tera
 
     # nginx
     nginx:
@@ -35,8 +35,8 @@ services:
             - microservices
 
     # mysql micro 01
-    db_micro_01:
-        container_name: db_micro_01
+    db_micro_tera:
+        container_name: db_micro_tera
         image: mysql:8.0
         restart: unless-stopped
         environment:
@@ -55,14 +55,14 @@ services:
             - microservices
 
     # queue micro 01
-    queue:
+    queue_micro_01:
         build:
             args:
                 user: admin
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
-        # restart: unless-stopped
+        restart: unless-stopped
         command: "php artisan queue:work"
         volumes:
             - ./:/var/www

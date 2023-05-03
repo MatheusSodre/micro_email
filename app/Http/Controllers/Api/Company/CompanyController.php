@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\StoreUpdateCompany;
 use App\Http\Resources\Company\CompanyResource;
-use Illuminate\Support\Facades\Response;
 use App\Services\Company\CompanyService;
+
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
