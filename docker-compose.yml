@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-    # imagem micro 01
-    micro_01:
+    # imagem micro email
+    micro_email:
         build:
             args:
                 user: admin
@@ -14,28 +14,27 @@ services:
         volumes:
             - ./:/var/www
         depends_on:
-            - redis_micro_01
-            - queue_micro_01
+            - redis_micro_email
+            - queue_micro_email
         networks:
             - microservices
         links:
-            - db_micro_tera
+            - db_micro_email
 
     # nginx
     nginx:
         image: nginx:alpine
         restart: unless-stopped
         ports:
-            - 8000:80
-            - 443:443
+            - 8002:80
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
             - microservices
 
-    # mysql micro 01
-    db_micro_tera:
+    # mysql micro email
+    db_micro_email:
         container_name: db_micro_tera
         image: mysql:8.0
         restart: unless-stopped
@@ -47,15 +46,15 @@ services:
         volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports:
-            - 3306:3306
+            - 3308:3306
         command: mysqld --character-set-server=utf8mb4
                 --collation-server=utf8mb4_unicode_ci
                 --default-authentication-plugin=mysql_native_password --sql-mode=""
         networks:
             - microservices
 
-    # queue micro 01
-    queue_micro_01:
+    # queue micro email
+    queue_micro_email:
         build:
             args:
                 user: admin
@@ -67,12 +66,12 @@ services:
         volumes:
             - ./:/var/www
         depends_on:
-            - redis_micro_01
+            - redis_micro_email
         networks:
             - microservices
 
     #redis
-    redis_micro_01:
+    redis_micro_email:
         image: redis:latest
         networks:
             - microservices
